@@ -1,11 +1,12 @@
-## Meal Finder App
+## Expense Tracker
 
-Search and generate random meals from the [themealdb.com](www.themealdb.com) API
+Keep track of income and expenses. Add and remove items and save to local storage
 
 ## Project Specifications
 
-- Display UI with form to search and button to generate
-- Connect to API and get meals
-- Display meals in DOM with image and hover effect
-- Click on meal and see the details
-- Click on generate button and fetch & display a random meal
+- Create UI for project
+- Display transaction items in DOM
+- Show balance, expense and income totals
+- Add new transation and reflect in total
+- Delete items from DOM
+- Persist to local storage

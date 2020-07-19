@@ -1,126 +1,120 @@
-const search = document.getElementById('search'),
-  submit = document.getElementById('submit'),
-  random = document.getElementById('random'),
-  mealsEl = document.getElementById('meals'),
-  resultHeading = document.getElementById('result-heading'),
-  single_mealEl = document.getElementById('single-meal');
+const balance = document.getElementById('balance');
+const money_plus = document.getElementById('money-plus');
+const money_minus = document.getElementById('money-minus');
+const list = document.getElementById('list');
+const form = document.getElementById('form');
+const text = document.getElementById('text');
+const amount = document.getElementById('amount');
 
-// Search meal and fetch from API
-function searchMeal(e) {
+// const dummyTransactions = [
+//   { id: 1, text: 'Flower', amount: -20 },
+//   { id: 2, text: 'Salary', amount: 300 },
+//   { id: 3, text: 'Book', amount: -10 },
+//   { id: 4, text: 'Camera', amount: 150 }
+// ];
+
+const localStorageTransactions = JSON.parse(
+  localStorage.getItem('transactions')
+);
+
+let transactions =
+  localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
+
+// Add transaction
+function addTransaction(e) {
   e.preventDefault();
 
-  // Clear single meal
-  single_mealEl.innerHTML = '';
-
-  // Get search term
-  const term = search.value;
-
-  // Check for empty
-  if (term.trim()) {
-    fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${term}`)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        resultHeading.innerHTML = `<h2>Search results for '${term}':</h2>`;
-
-        if (data.meals === null) {
-          resultHeading.innerHTML = `<p>There are no search results. Try again!<p>`;
-        } else {
-          mealsEl.innerHTML = data.meals
-            .map(
-              meal => `
-            <div class="meal">
-              <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-              <div class="meal-info" data-mealID="${meal.idMeal}">
-                <h3>${meal.strMeal}</h3>
-              </div>
-            </div>
-          `
-            )
-            .join('');
-        }
-      });
-    // Clear search text
-    search.value = '';
+  if (text.value.trim() === '' || amount.value.trim() === '') {
+    alert('Please add a text and amount');
   } else {
-    alert('Please enter a search term');
+    const transaction = {
+      id: generateID(),
+      text: text.value,
+      amount: +amount.value
+    };
+
+    transactions.push(transaction);
+
+    addTransactionDOM(transaction);
+
+    updateValues();
+
+    updateLocalStorage();
+
+    text.value = '';
+    amount.value = '';
   }
 }
 
-// Fetch meal by ID
-function getMealById(mealID) {
-  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealID}`)
-    .then(res => res.json())
-    .then(data => {
-      const meal = data.meals[0];
-
-      addMealToDOM(meal);
-    });
+// Generete random ID
+function generateID() {
+  return Math.floor(Math.random() * 100000000);
 }
 
-// Fetch random meal from API
-function getRandomMeal() {
-  // Clear meals and heading
-  mealsEl.innerHTML = '';
-  resultHeading.innerHTML = '';
+// Add transaction to DOM list
+function addTransactionDOM(transaction) {
+  // Get sign
+  const sign = transaction.amount < 0 ? '-' : '+';
 
-  fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
-    .then(res => res.json())
-    .then(data => {
-      const meal = data.meals[0];
+  const item = document.createElement('li');
 
-      addMealToDOM(meal);
-    });
-}
+  // Add class based on value
+  item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
 
-// Add meal to DOM
-function addMealToDOM(meal) {
-  const ingredients = [];
-
-  for (let i = 1; i <= 20; i++) {
-    if (meal[`strIngredient${i}`]) {
-      ingredients.push(
-        `${meal[`strIngredient${i}`]} - ${meal[`strMeasure${i}`]}`
-      );
-    } else {
-      break;
-    }
-  }
-
-  single_mealEl.innerHTML = `
-    <div class="single-meal">
-      <h1>${meal.strMeal}</h1>
-      <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
-      <div class="single-meal-info">
-        ${meal.strCategory ? `<p>${meal.strCategory}</p>` : ''}
-        ${meal.strArea ? `<p>${meal.strArea}</p>` : ''}
-      </div>
-      <div class="main">
-        <p>${meal.strInstructions}</p>
-        <h2>Ingredients</h2>
-        <ul>
-          ${ingredients.map(ing => `<li>${ing}</li>`).join('')}
-        </ul>
-      </div>
-    </div>
+  item.innerHTML = `
+    ${transaction.text} <span>${sign}${Math.abs(
+    transaction.amount
+  )}</span> <button class="delete-btn" onClick="removeTransaction(${
+    transaction.id
+  })">x</button>
   `;
+
+  list.appendChild(item);
 }
 
-// Event listeners
-submit.addEventListener('submit', searchMeal);
-random.addEventListener('click', getRandomMeal);
+// Uodate the balance, income & expense
+function updateValues() {
+  const amounts = transactions.map(transaction => transaction.amount);
 
-mealsEl.addEventListener('click', e => {
-  const mealInfo = e.path.find(item => {
-    if (item.classList) {
-      return item.classList.contains('meal-info');
-    } else {
-      return false;
-    }
-  });
+  const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
 
-  if (mealInfo) {
-    const mealID = mealInfo.getAttribute('data-mealid');
-    getMealById(mealID);
-  }
-});
+  const income = amounts
+    .filter(item => item > 0)
+    .reduce((acc, item) => (acc += item), 0)
+    .toFixed(2);
+
+  const expense = (
+    amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0) *
+    -1
+  ).toFixed(2);
+
+  balance.innerText = `$${total}`;
+  money_plus.innerText = `$${income}`;
+  money_minus.innerText = `$${expense}`;
+}
+
+// Remove transaction by ID
+function removeTransaction(id) {
+  transactions = transactions.filter(transaction => transaction.id !== id);
+
+  updateLocalStorage();
+
+  init();
+}
+
+// Update local storage transactions
+function updateLocalStorage() {
+  localStorage.setItem('transactions', JSON.stringify(transactions));
+}
+
+// Init app
+function init() {
+  list.innerHTML = '';
+
+  transactions.forEach(addTransactionDOM);
+  updateValues();
+}
+
+init();
+
+form.addEventListener('submit', addTransaction);
