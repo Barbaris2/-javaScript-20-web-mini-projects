@@ -13,7 +13,7 @@
 ## Описание веток
 
 - `git checkout master`- пустая ветка. Только общее описание проектов. _(файл READ.md)_. Смотреть на [
-  CodeSandbox.io](https://qtcb3.csb.app/)
+  CodeSandbox.io](https://td01s.csb.app/)
 - `git checkout custom-video-player` - пользовательский видеоплеер, использующий элемент видео HTML5 и его API-интерфейс JavaScript с индивидуальным дизайном.
 - `git checkout dom-array-methods-DOM` - проект по обучению методам массива _forEach()_, _map()_, _filter()_, _sort()_, _reduce()_ и манипулированию DOM.
 - `git checkout exchange-rate-calculator` - калькулятор обменного курса.
