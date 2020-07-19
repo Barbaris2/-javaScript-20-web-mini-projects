@@ -1,12 +1,10 @@
-## Memory Cards
+## LyricsSearch App
 
-Flash card app for learning. Display, add and remove memory cards with questions and answers
+Find songs, artists and lyrics using the [lyrics.ovh](https://lyrics.ovh) API
 
 ## Project Specifications
 
-- Create flip cards using CSS
-- Create "Add new card" overlay with form
-- Display question cards and flip for answer
-- View prev and next cards
-- Add new cards to local storage
-- Clear all cards from local storage
+- Display UI with song/artist input
+- Fetch songs/artists and put in DOM
+- Add pagination
+- Add get lyrics functionality and display in DOM
