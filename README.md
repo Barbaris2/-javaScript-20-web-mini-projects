@@ -1,10 +1,12 @@
-## Infinite Scrolling & Filter
+## Speed Typer Typing Game
 
-Display blog posts from [jsonplaceholder](https://jsonplaceholder.typicode.com) and add infinite scroll to fetch posts and also add filter box
+Game to beat the clock by typing random words
 
 ## Project Specifications
 
-- Create UI & custom CSS loader animation
-- Fetch initial posts from API and display
-- Scroll down, show loader and fetch next set of posts
-- Add filtering for fetched posts
+- Create game UI including a difficuly setting
+- Generate random word and place in DOM
+- Score increase after word is typed
+- Implement timer
+- Add certain amount of time after word is typed based on difficulty
+- Store difficulty setting in local storage
