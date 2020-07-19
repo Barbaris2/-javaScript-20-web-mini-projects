@@ -1,10 +1,13 @@
-## Modal & Menu Slider
+## Hangman Game
 
-Simple landing page with sliding menu and modal
+Select a letter to figure out a hidden word in a set amount of chances
 
 ## Project Specifications
 
-- Create and style landing page
-- Style side nav and modal
-- Add functionality to make menu open/close on button click
-- Add functionality to make modal open/close on button click
+- Display hangman pole and figure using SVG
+- Generate a random word
+- Display word in UI with correct letters
+- Display wrong letters
+- Show notification when select a letter twice
+- Show popup on win or lose
+- Play again button to reset game

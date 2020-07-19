@@ -1,196 +1,130 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
-
-:root {
-  --modal-duration: 1s;
-  --primary-color: #30336b;
-  --secondary-color: #be2edd;
-}
-
 * {
   box-sizing: border-box;
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  background-color: #34495e;
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 80vh;
   margin: 0;
-  transition: transform 0.3s ease;
+  overflow: hidden;
 }
 
-body.show-nav {
-  /* Width of nav */
-  transform: translateX(200px);
+h1 {
+  margin: 20px 0 0;
 }
 
-nav {
-  background-color: var(--primary-color);
-  border-right: 2px solid rgba(200, 200, 200, 0.1);
-  color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 200px;
-  height: 100vh;
-  z-index: 100;
-  transform: translateX(-100%);
-}
-
-nav .logo {
-  padding: 30px 0;
-  text-align: center;
-}
-
-nav .logo img {
-  height: 75px;
-  width: 75px;
-  border-radius: 50%;
-}
-
-nav ul {
-  padding: 0;
-  list-style-type: none;
-  margin: 0;
-}
-
-nav ul li {
-  border-bottom: 2px solid rgba(200, 200, 200, 0.1);
-  padding: 20px;
-}
-
-nav ul li:first-of-type {
-  border-top: 2px solid rgba(200, 200, 200, 0.1);
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-}
-
-nav ul li a:hover {
-  text-decoration: underline;
-}
-
-header {
-  background-color: var(--primary-color);
-  color: #fff;
-  font-size: 130%;
+.game-container {
+  padding: 20px 30px;
   position: relative;
-  padding: 40px 15px;
-  text-align: center;
+  margin: auto;
+  height: 350px;
+  width: 450px;
 }
 
-header h1 {
-  margin: 0;
+.figure-container {
+  fill: transparent;
+  stroke: #fff;
+  stroke-width: 4px;
+  stroke-linecap: round;
 }
 
-header p {
-  margin: 30px 0;
+.figure-part {
+  display: none;
 }
 
-button,
-input[type='submit'] {
-  background-color: var(--secondary-color);
-  border: 0;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  padding: 8px 12px;
-}
-
-button:focus {
-  outline: none;
-}
-
-.toggle {
-  background-color: rgba(0, 0, 0, 0.3);
+.wrong-letters-container {
   position: absolute;
   top: 20px;
-  left: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
 }
 
-.cta-btn {
-  padding: 12px 30px;
-  font-size: 20px;
+.wrong-letters-container p {
+  margin: 0 0 5px;
 }
 
-.container {
-  padding: 15px;
-  margin: 0 auto;
-  max-width: 100%;
-  width: 800px;
+.wrong-letters-container span {
+  font-size: 24px;
 }
 
-.modal-container {
-  background-color: rgba(0, 0, 0, 0.6);
-  display: none;
+.word {
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.letter {
+  border-bottom: 3px solid #2980b9;
+  display: inline-flex;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 3px;
+  height: 50px;
+  width: 20px;
+}
+
+.popup-container {
+  background-color: rgba(0, 0, 0, 0.3);
   position: fixed;
   top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  /* display: flex; */
+  display: none;
+  align-items: center;
+  justify-content: center;
 }
 
-.modal-container.show-modal {
-  display: block;
-}
-
-.modal {
-  background-color: #fff;
+.popup {
+  background: #2980b9;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  position: absolute;
-  overflow: hidden;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  width: 400px;
-  animation-name: modalopen;
-  animation-duration: var(--modal-duration);
-}
-
-.modal-header {
-  background: var(--primary-color);
-  color: #fff;
-  padding: 15px;
-}
-
-.modal-header h3 {
-  margin: 0;
-  border-bottom: 1px solid #333;
-}
-
-.modal-content {
+  box-shadow: 0 15px 10px 3px rgba(0, 0, 0, 0.1);
   padding: 20px;
+  text-align: center;
 }
 
-.modal-form div {
-  margin: 15px 0;
+.popup button {
+  cursor: pointer;
+  background-color: #fff;
+  color: #2980b9;
+  border: 0;
+  margin-top: 20px;
+  padding: 12px 20px;
+  font-size: 16px;
 }
 
-.modal-form label {
-  display: block;
-  margin-bottom: 5px;
+.popup button:active {
+  transform: scale(0.98);
 }
 
-.modal-form .form-input {
-  padding: 8px;
-  width: 100%;
+.popup button:focus {
+  outline: 0;
 }
 
-.close-btn {
-  background: transparent;
-  font-size: 25px;
+.notification-container {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 10px 10px 0 0;
+  padding: 15px 20px;
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: -50px;
+  transition: transform 0.3s ease-in-out;
 }
 
-@keyframes modalopen {
-  from {
-    opacity: 0;
-  }
+.notification-container p {
+  margin: 0;
+}
 
-  to {
-    opacity: 1;
-  }
+.notification-container.show {
+  transform: translateY(-50px);
 }
