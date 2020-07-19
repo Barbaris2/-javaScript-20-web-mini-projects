@@ -1,142 +1,157 @@
-const main = document.querySelector('main');
-const voicesSelect = document.getElementById('voices');
-const textarea = document.getElementById('text');
-const readBtn = document.getElementById('read');
-const toggleBtn = document.getElementById('toggle');
-const closeBtn = document.getElementById('close');
+const cardsContainer = document.getElementById('cards-container');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+const currentEl = document.getElementById('current');
+const showBtn = document.getElementById('show');
+const hideBtn = document.getElementById('hide');
+const questionEl = document.getElementById('question');
+const answerEl = document.getElementById('answer');
+const addCardBtn = document.getElementById('add-card');
+const clearBtn = document.getElementById('clear');
+const addContainer = document.getElementById('add-container');
 
-const data = [
-  {
-    image: './img/drink.jpg',
-    text: "I'm Thirsty"
-  },
-  {
-    image: './img/food.jpg',
-    text: "I'm Hungry"
-  },
-  {
-    image: './img/tired.jpg',
-    text: "I'm Tired"
-  },
-  {
-    image: './img/hurt.jpg',
-    text: "I'm Hurt"
-  },
-  {
-    image: './img/happy.jpg',
-    text: "I'm Happy"
-  },
-  {
-    image: './img/angry.jpg',
-    text: "I'm Angry"
-  },
-  {
-    image: './img/sad.jpg',
-    text: "I'm Sad"
-  },
-  {
-    image: './img/scared.jpg',
-    text: "I'm Scared"
-  },
-  {
-    image: './img/outside.jpg',
-    text: 'I Want To Go Outside'
-  },
-  {
-    image: './img/home.jpg',
-    text: 'I Want To Go Home'
-  },
-  {
-    image: './img/school.jpg',
-    text: 'I Want To Go To School'
-  },
-  {
-    image: './img/grandma.jpg',
-    text: 'I Want To Go To Grandmas'
+// Keep track of current card
+let currentActiveCard = 0;
+
+// Store DOM cards
+const cardsEl = [];
+
+// Store card data
+const cardsData = getCardsData();
+
+// const cardsData = [
+//   {
+//     question: 'What must a variable begin with?',
+//     answer: 'A letter, $ or _'
+//   },
+//   {
+//     question: 'What is a variable?',
+//     answer: 'Container for a piece of data'
+//   },
+//   {
+//     question: 'Example of Case Sensitive Variable',
+//     answer: 'thisIsAVariable'
+//   }
+// ];
+
+// Create all cards
+function createCards() {
+  cardsData.forEach((data, index) => createCard(data, index));
+}
+
+// Create a single card in DOM
+function createCard(data, index) {
+  const card = document.createElement('div');
+  card.classList.add('card');
+
+  if (index === 0) {
+    card.classList.add('active');
   }
-];
 
-data.forEach(createBox);
-
-// Create speech boxes
-function createBox(item) {
-  const box = document.createElement('div');
-
-  const { image, text } = item;
-
-  box.classList.add('box');
-
-  box.innerHTML = `
-    <img src="${image}" alt="${text}" />
-    <p class="info">${text}</p>
+  card.innerHTML = `
+  <div class="inner-card">
+  <div class="inner-card-front">
+    <p>
+      ${data.question}
+    </p>
+  </div>
+  <div class="inner-card-back">
+    <p>
+      ${data.answer}
+    </p>
+  </div>
+</div>
   `;
 
-  box.addEventListener('click', () => {
-    setTextMessage(text);
-    speakText();
+  card.addEventListener('click', () => card.classList.toggle('show-answer'));
 
-    // Add active effect
-    box.classList.add('active');
-    setTimeout(() => box.classList.remove('active'), 800);
-  });
+  // Add to DOM cards
+  cardsEl.push(card);
 
-  main.appendChild(box);
+  cardsContainer.appendChild(card);
+
+  updateCurrentText();
 }
 
-// Init speech synth
-const message = new SpeechSynthesisUtterance();
-
-// Store voices
-let voices = [];
-
-function getVoices() {
-  voices = speechSynthesis.getVoices();
-
-  voices.forEach(voice => {
-    const option = document.createElement('option');
-
-    option.value = voice.name;
-    option.innerText = `${voice.name} ${voice.lang}`;
-
-    voicesSelect.appendChild(option);
-  });
+// Show number of cards
+function updateCurrentText() {
+  currentEl.innerText = `${currentActiveCard + 1}/${cardsEl.length}`;
 }
 
-// Set text
-function setTextMessage(text) {
-  message.text = text;
+// Get cards from local storage
+function getCardsData() {
+  const cards = JSON.parse(localStorage.getItem('cards'));
+  return cards === null ? [] : cards;
 }
 
-// Speak text
-function speakText() {
-  speechSynthesis.speak(message);
+// Add card to local storage
+function setCardsData(cards) {
+  localStorage.setItem('cards', JSON.stringify(cards));
+  window.location.reload();
 }
 
-// Set voice
-function setVoice(e) {
-  message.voice = voices.find(voice => voice.name === e.target.value);
-}
+createCards();
 
-// Voices changed
-speechSynthesis.addEventListener('voiceschanged', getVoices);
+// Event listeners
 
-// Toggle text box
-toggleBtn.addEventListener('click', () =>
-  document.getElementById('text-box').classList.toggle('show')
-);
+// Next button
+nextBtn.addEventListener('click', () => {
+  cardsEl[currentActiveCard].className = 'card left';
 
-// Close button
-closeBtn.addEventListener('click', () =>
-  document.getElementById('text-box').classList.remove('show')
-);
+  currentActiveCard = currentActiveCard + 1;
 
-// Change voice
-voicesSelect.addEventListener('change', setVoice);
+  if (currentActiveCard > cardsEl.length - 1) {
+    currentActiveCard = cardsEl.length - 1;
+  }
 
-// Read text button
-readBtn.addEventListener('click', () => {
-  setTextMessage(textarea.value);
-  speakText();
+  cardsEl[currentActiveCard].className = 'card active';
+
+  updateCurrentText();
 });
 
-getVoices();
+// Prev button
+prevBtn.addEventListener('click', () => {
+  cardsEl[currentActiveCard].className = 'card right';
+
+  currentActiveCard = currentActiveCard - 1;
+
+  if (currentActiveCard < 0) {
+    currentActiveCard = 0;
+  }
+
+  cardsEl[currentActiveCard].className = 'card active';
+
+  updateCurrentText();
+});
+
+// Show add container
+showBtn.addEventListener('click', () => addContainer.classList.add('show'));
+// Hide add container
+hideBtn.addEventListener('click', () => addContainer.classList.remove('show'));
+
+// Add new card
+addCardBtn.addEventListener('click', () => {
+  const question = questionEl.value;
+  const answer = answerEl.value;
+
+  if (question.trim() && answer.trim()) {
+    const newCard = { question, answer };
+
+    createCard(newCard);
+
+    questionEl.value = '';
+    answerEl.value = '';
+
+    addContainer.classList.remove('show');
+
+    cardsData.push(newCard);
+    setCardsData(cardsData);
+  }
+});
+
+// Clear cards button
+clearBtn.addEventListener('click', () => {
+  localStorage.clear();
+  cardsContainer.innerHTML = '';
+  window.location.reload();
+});
