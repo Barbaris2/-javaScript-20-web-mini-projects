@@ -1,14 +1,10 @@
-## Movie Seat Booking
+## Infinite Scrolling & Filter
 
-Display movie choices and seats in a theater to select from in order to purchase tickets
+Display blog posts from [jsonplaceholder](https://jsonplaceholder.typicode.com) and add infinite scroll to fetch posts and also add filter box
 
 ## Project Specifications
 
-- Display UI with movie select, screen, seats, legend & seat info
-- User can select a movie/price
-- User can select/deselect seats
-- User can not select occupied seats
-- Number of seats and price will update
-- Save seats, movie and price to local storage so that UI is still populated on refresh
-
-Design inspiration from [Dribbble](https://dribbble.com/shots/3628370-Movie-Seat-Booking)
+- Create UI & custom CSS loader animation
+- Fetch initial posts from API and display
+- Scroll down, show loader and fetch next set of posts
+- Add filtering for fetched posts
