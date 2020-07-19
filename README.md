@@ -1,13 +1,12 @@
-![](https://github.com/Barbaris2/-javaScript-20-web-mini-projects/blob/master/images/all.png)
+## Form Validator (Intro Project)
 
-# [javaScript] 20 web mini projects
+Simple client side form validation. Check requird, length, email and password match
 
-20 web-приложений, от небольших игр до систем отслеживания расходов, поисковиков и relax-приложений. Все приложения построенны с использованием HTML5, CSS и javaScript без фреймворков и библиотек.
+## Project Specifications
 
-## Описание веток
-
-- `git checkout master`- пустая ветка. Только общее описание проектов. _(файл READ.md)_
-
-### Ветки репозитория:
-
-- `git checkout master`
+- Create form UI
+- Show error messages under specific inputs
+- checkRequired() to accept array of inputs
+- checkLength() to check min and max length
+- checkEmail() to validate email with regex
+- checkPasswordsMatch() to match confirm password
