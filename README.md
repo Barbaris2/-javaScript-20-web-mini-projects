@@ -1,13 +1,11 @@
-## Hangman Game
+## Meal Finder App
 
-Select a letter to figure out a hidden word in a set amount of chances
+Search and generate random meals from the [themealdb.com](www.themealdb.com) API
 
 ## Project Specifications
 
-- Display hangman pole and figure using SVG
-- Generate a random word
-- Display word in UI with correct letters
-- Display wrong letters
-- Show notification when select a letter twice
-- Show popup on win or lose
-- Play again button to reset game
+- Display UI with form to search and button to generate
+- Connect to API and get meals
+- Display meals in DOM with image and hover effect
+- Click on meal and see the details
+- Click on generate button and fetch & display a random meal
