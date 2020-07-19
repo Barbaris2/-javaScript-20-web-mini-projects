@@ -1,12 +1,11 @@
-## Speed Typer Typing Game
+## Speech Text Reader
 
-Game to beat the clock by typing random words
+A text to speech app for non-verbal people. Pre-made buttons and custom text speech. This project uses the Web Speech API
 
 ## Project Specifications
 
-- Create game UI including a difficuly setting
-- Generate random word and place in DOM
-- Score increase after word is typed
-- Implement timer
-- Add certain amount of time after word is typed based on difficulty
-- Store difficulty setting in local storage
+- Create responsive UI (CSS Grid) with picture buttons
+- Speaks the text when button clicked
+- Drop down custom text to speech
+- Speaks the text typed in
+- Change voices and accents
