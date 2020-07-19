@@ -1,11 +1,12 @@
-## Exchange Rate
+## DOM Array Methods
 
-Select countries to get the exchange rate for a specific amount
+Project to teach high order array methods and DOM manipulation
 
 ## Project Specifications
 
-- Display UI with 2 select lists for countries and 2 inputs for amounts
-- Fetch exchange rates from API (https://api.exchangerate-api.com)
-- Display the values for both countries
-- Update values on amount change
-- Swap country rates
+- Fetch random users from the [randomuser.me](https://randomuser.me) API
+- Use forEach() to loop and output user/wealth
+- Use map() to double wealth
+- Use filter() to filter only millionaires
+- Use sort() to sort by wealth
+- Use reduce() to add all wealth
