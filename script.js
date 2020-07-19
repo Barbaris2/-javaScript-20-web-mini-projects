@@ -1,120 +1,113 @@
-const balance = document.getElementById('balance');
-const money_plus = document.getElementById('money-plus');
-const money_minus = document.getElementById('money-minus');
-const list = document.getElementById('list');
-const form = document.getElementById('form');
-const text = document.getElementById('text');
-const amount = document.getElementById('amount');
+const musicContainer = document.getElementById('music-container');
+const playBtn = document.getElementById('play');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
 
-// const dummyTransactions = [
-//   { id: 1, text: 'Flower', amount: -20 },
-//   { id: 2, text: 'Salary', amount: 300 },
-//   { id: 3, text: 'Book', amount: -10 },
-//   { id: 4, text: 'Camera', amount: 150 }
-// ];
+const audio = document.getElementById('audio');
+const progress = document.getElementById('progress');
+const progressContainer = document.getElementById('progress-container');
+const title = document.getElementById('title');
+const cover = document.getElementById('cover');
 
-const localStorageTransactions = JSON.parse(
-  localStorage.getItem('transactions')
-);
+// Song titles
+const songs = ['hey', 'summer', 'ukulele'];
 
-let transactions =
-  localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
+// Keep track of song
+let songIndex = 2;
 
-// Add transaction
-function addTransaction(e) {
-  e.preventDefault();
+// Initially load song details into DOM
+loadSong(songs[songIndex]);
 
-  if (text.value.trim() === '' || amount.value.trim() === '') {
-    alert('Please add a text and amount');
-  } else {
-    const transaction = {
-      id: generateID(),
-      text: text.value,
-      amount: +amount.value
-    };
+// Update song details
+function loadSong(song) {
+  title.innerText = song;
+  audio.src = `music/${song}.mp3`;
+  cover.src = `images/${song}.jpg`;
+}
 
-    transactions.push(transaction);
+// Play song
+function playSong() {
+  musicContainer.classList.add('play');
+  playBtn.querySelector('i.fas').classList.remove('fa-play');
+  playBtn.querySelector('i.fas').classList.add('fa-pause');
 
-    addTransactionDOM(transaction);
+  audio.play();
+}
 
-    updateValues();
+// Pause song
+function pauseSong() {
+  musicContainer.classList.remove('play');
+  playBtn.querySelector('i.fas').classList.add('fa-play');
+  playBtn.querySelector('i.fas').classList.remove('fa-pause');
 
-    updateLocalStorage();
+  audio.pause();
+}
 
-    text.value = '';
-    amount.value = '';
+// Previous song
+function prevSong() {
+  songIndex--;
+
+  if (songIndex < 0) {
+    songIndex = songs.length - 1;
   }
+
+  loadSong(songs[songIndex]);
+
+  playSong();
 }
 
-// Generete random ID
-function generateID() {
-  return Math.floor(Math.random() * 100000000);
+// Next song
+function nextSong() {
+  songIndex++;
+
+  if (songIndex > songs.length - 1) {
+    songIndex = 0;
+  }
+
+  loadSong(songs[songIndex]);
+
+  playSong();
 }
 
-// Add transaction to DOM list
-function addTransactionDOM(transaction) {
-  // Get sign
-  const sign = transaction.amount < 0 ? '-' : '+';
-
-  const item = document.createElement('li');
-
-  // Add class based on value
-  item.classList.add(transaction.amount < 0 ? 'minus' : 'plus');
-
-  item.innerHTML = `
-    ${transaction.text} <span>${sign}${Math.abs(
-    transaction.amount
-  )}</span> <button class="delete-btn" onClick="removeTransaction(${
-    transaction.id
-  })">x</button>
-  `;
-
-  list.appendChild(item);
+// Update progress bar
+function updateProgress(e) {
+  const { duration, currentTime } = e.srcElement;
+  const progressPercent = (currentTime / duration) * 100;
+  progress.style.width = `${progressPercent}%`;
 }
 
-// Uodate the balance, income & expense
-function updateValues() {
-  const amounts = transactions.map(transaction => transaction.amount);
+// Set progress bar
+function setProgress(e) {
+  const width = this.clientWidth;
+  const clickX = e.offsetX;
+  const duration = audio.duration;
 
-  const total = amounts.reduce((acc, item) => (acc += item), 0).toFixed(2);
-
-  const income = amounts
-    .filter(item => item > 0)
-    .reduce((acc, item) => (acc += item), 0)
-    .toFixed(2);
-
-  const expense = (
-    amounts.filter(item => item < 0).reduce((acc, item) => (acc += item), 0) *
-    -1
-  ).toFixed(2);
-
-  balance.innerText = `$${total}`;
-  money_plus.innerText = `$${income}`;
-  money_minus.innerText = `$${expense}`;
+  audio.currentTime = (clickX / width) * duration;
+  console.log(width);
+  console.log(clickX);
+  console.log(duration);
 }
 
-// Remove transaction by ID
-function removeTransaction(id) {
-  transactions = transactions.filter(transaction => transaction.id !== id);
+// Event listeners
+playBtn.addEventListener('click', () => {
+  const isPlaying = musicContainer.classList.contains('play');
 
-  updateLocalStorage();
+  if (isPlaying) {
+    pauseSong();
+  } else {
+    playSong();
+  }
+});
 
-  init();
-}
+// Change song
+prevBtn.addEventListener('click', prevSong);
+nextBtn.addEventListener('click', nextSong);
 
-// Update local storage transactions
-function updateLocalStorage() {
-  localStorage.setItem('transactions', JSON.stringify(transactions));
-}
+// Time/song update
+audio.addEventListener('timeupdate', updateProgress);
 
-// Init app
-function init() {
-  list.innerHTML = '';
+// Click on progress bar
+progressContainer.addEventListener('click', setProgress);
 
-  transactions.forEach(addTransactionDOM);
-  updateValues();
-}
-
-init();
-
-form.addEventListener('submit', addTransaction);
+// Song ends
+audio.addEventListener('ended', nextSong);
