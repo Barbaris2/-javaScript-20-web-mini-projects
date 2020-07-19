@@ -6,7 +6,7 @@
 
 ### Быстрый старт
 
-- клонируйте репозиторий: `git clone https://github.com/Barbaris2/-javaScript-20-web-mini-projects/tree/master`
+- клонируйте репозиторий: `git clone https://github.com/Barbaris2/-javaScript-20-web-mini-projects`
 - перейдите в нужную ветку(_см. описание веток ниже_): `git checkout <branch name>`
 - откройте файл _index.html_ в Вашем браузере.
 
