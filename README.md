@@ -1,4 +1,4 @@
-![](https://github.com/Barbaris2/-javaScript-20-web-mini-projects/blob/master/images/all.png)
+![](https://github.com/Barbaris2/-javaScript-20-web-mini-projects/blob/master/img/all.png)
 
 # [javaScript] 20 web mini projects
 
