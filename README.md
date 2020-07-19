@@ -1,12 +1,10 @@
-## DOM Array Methods
+## Modal & Menu Slider
 
-Project to teach high order array methods and DOM manipulation
+Simple landing page with sliding menu and modal
 
 ## Project Specifications
 
-- Fetch random users from the [randomuser.me](https://randomuser.me) API
-- Use forEach() to loop and output user/wealth
-- Use map() to double wealth
-- Use filter() to filter only millionaires
-- Use sort() to sort by wealth
-- Use reduce() to add all wealth
+- Create and style landing page
+- Style side nav and modal
+- Add functionality to make menu open/close on button click
+- Add functionality to make modal open/close on button click
