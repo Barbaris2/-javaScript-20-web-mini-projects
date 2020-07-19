@@ -6,7 +6,7 @@
 
 ### Быстрый старт
 
-- клонируйте репозиторий: `git clone https://github.com/Barbaris2/-javaScript-20-web-mini-projects`
+- клонируйте репозиторий: `git clone https://github.com/Barbaris2/-javaScript-20-web-mini-projects.git`
 - перейдите в нужную ветку(_см. описание веток ниже_): `git checkout <branch name>`
 - откройте файл _index.html_ в Вашем браузере.
 
@@ -47,3 +47,4 @@
 - `git checkout music-player`
 - `git checkout speach-text-reader`
 - `git checkout type-game`
+-
