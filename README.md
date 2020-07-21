@@ -1,13 +1,11 @@
-## Breakout! Game
+## New Year Countdown
 
-Game where you control a paddle with the arrow keys to bounce a ball up to break bricks. This app uses the HTML5 canvas element and API
+Landing page that counts down from the current date to the next new year
 
 ## Project Specifications
 
-- Draw elements on canvas
-- Use canvas paths to draw shapes
-- Add animation with requestAnimationFrame(cb)
-- Move paddle on arrow key press
-- Add collision detection
-- Keep score
-- Add rules button with slider
+- Create landing page with HTML/CSS
+- Calculate the days, hours, mins and seconds to the new year
+- Insert values into the DOM
+- Show a spinner right before loading the countdown
+- Show the coming year in the background
