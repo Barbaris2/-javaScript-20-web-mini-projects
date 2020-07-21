@@ -1,10 +1,13 @@
-## Relaxer App
+## Breakout! Game
 
-A relaxing breathing app with a visual director to tell you when to breathe in, hold and breathe out
+Game where you control a paddle with the arrow keys to bounce a ball up to break bricks. This app uses the HTML5 canvas element and API
 
 ## Project Specifications
 
-- Create circle and gradient circle with CSS
-- Create and animate pointer (Small circle)
-- Create grow and shrink animations
-- Add JavaScript to create the breath animation effect
+- Draw elements on canvas
+- Use canvas paths to draw shapes
+- Add animation with requestAnimationFrame(cb)
+- Move paddle on arrow key press
+- Add collision detection
+- Keep score
+- Add rules button with slider
