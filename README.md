@@ -13,7 +13,7 @@
 ## Описание веток
 
 - `git checkout master`- пустая ветка. Только общее описание проектов. _(файл READ.md)_.
-- `git checkout breakeout-game` -
+- `git checkout breakeout-game` - игра, где вы управляете платформой с помощью клавиш со стрелками. Ваша задача отбить шар платформой, так чтобы он разбил кирпичи. Это приложение использует _<Canvas>_.
 - `git checkout custom-video-player` - пользовательский видеоплеер, использующий элемент видео HTML5 и его API-интерфейс JavaScript с индивидуальным дизайном. Смотреть на [CodeSandbox.io](https://td01s.csb.app/)
 - `git checkout dom-array-methods-DOM` - проект по обучению методам массива _forEach()_, _map()_, _filter()_, _sort()_, _reduce()_ и манипулированию DOM.Смотреть на [CodeSandbox.io](https://fr9po.csb.app/)
 - `git checkout exchange-rate-calculator` - калькулятор обменного курса. Смотреть на [CodeSandbox.io](https://8odkh.csb.app/)
@@ -27,16 +27,17 @@
 - `git checkout modal-menu-slider` - простая страница со слайдером и модальным окном. Смотреть на [CodeSandbox.io](https://87dph.csb.app/)
 - `git checkout movie-seat-booking` - приложение для бронирования билнтов в кино. Смотреть на [CodeSandbox.io](https://jwlrd.csb.app/)
 - `git checkout music-player` - аудиоплеер с красивым интерфейс для воспроизведения музыки, хранящейся в «музыкальной папке», используя аудио API HTML5. Смотреть на [CodeSandbox.io](https://usnvv.csb.app/)
-- `git checkout new-year-countdown` -
-- `git checkout relax-app` -
-- `git checkout sorttable-list` -
+- `git checkout new-year-countdown` - страница с обратным отсчетом от текущей даты до следующего нового года.
+- `git checkout relax-app` - приложение для расслабления с визуализацией, которое сообщит вам, как нужно дышать чтобы расслабиться. Используется _HTML Drag and Drop API._
+- `git checkout sorttable-list` - список миллионеров, который можно отсортировать перетаскиванием элементов.
 - `git checkout speach-text-reader` - приложение для озвучивания текста различными 'спикерами'. Смотреть на [CodeSandbox.io](https://gf30i.csb.app/)
-  `git checkout speak-number-guess` -
+- `git checkout speak-number-guess` - игра в угадайку чисел, где вы говорите свое число, а программа сравнивает с загадонным чмслом. Исполбзуется микрофон и API распознавания речи.
 - `git checkout type-game` - игра на скорость ввода случайных слов. С выбором уровня сложности. Смотреть на [CodeSandbox.io](https://y111t.csb.app/)
 
 ### Ветки репозитория:
 
 - `git checkout master`
+- `git checkout breakeout-game` -
 - `git checkout custom-video-player`
 - `git checkout dom-array-methods-DOM`
 - `git checkout exchange-rate-calculator`
@@ -51,5 +52,8 @@
 - `git checkout movie-seat-booking`
 - `git checkout music-player`
 - `git checkout speach-text-reader`
+- `git checkout new-year-countdown`
+- `git checkout relax-app`
+- `git checkout sorttable-list`
+- `git checkout speak-number-guess`
 - `git checkout type-game`
--
