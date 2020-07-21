@@ -1,11 +1,10 @@
-## Sortable List
+## Speak Number Guessing Game
 
-Display a scrambled list that can be sorted with drag and drop. Used HTML Drag and Drop API
+Number guessing game where you speak your guess into the microphone using the speech recognition API
 
 ## Project Specifications
 
-- Create an ordered list (Top 10 richest people)
-- Scramble list items randomly
-- Allow user to drag and drop an item to a different position
-- Button to check if items are in correct order
-- Show green for correct order and red for wrong order
+- Display UI directing user to speak guess
+- Implement speech recognition to listen to mic
+- Process user's guess and match
+- Let user know higher, lower, match or not a number

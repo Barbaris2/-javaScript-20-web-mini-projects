@@ -1,118 +1,76 @@
-const draggable_list = document.getElementById('draggable-list');
-const check = document.getElementById('check');
+const msgEl = document.getElementById('msg');
 
-const richestPeople = [
-  'Jeff Bezos',
-  'Bill Gates',
-  'Warren Buffett',
-  'Bernard Arnault',
-  'Carlos Slim Helu',
-  'Amancio Ortega',
-  'Larry Ellison',
-  'Mark Zuckerberg',
-  'Michael Bloomberg',
-  'Larry Page'
-];
+const randomNum = getRandomNumber();
 
-// Store listitems
-const listItems = [];
+console.log('Number:', randomNum);
 
-let dragStartIndex;
+window.SpeechRecognition =
+  window.SpeechRecognition || window.webkitSpeechRecognition;
 
-createList();
+let recognition = new window.SpeechRecognition();
 
-// Insert list items into DOM
-function createList() {
-  [...richestPeople]
-    .map(a => ({ value: a, sort: Math.random() }))
-    .sort((a, b) => a.sort - b.sort)
-    .map(a => a.value)
-    .forEach((person, index) => {
-      const listItem = document.createElement('li');
+// Start recognition and game
+recognition.start();
 
-      listItem.setAttribute('data-index', index);
+// Capture user speak
+function onSpeak(e) {
+  const msg = e.results[0][0].transcript;
 
-      listItem.innerHTML = `
-        <span class="number">${index + 1}</span>
-        <div class="draggable" draggable="true">
-          <p class="person-name">${person}</p>
-          <i class="fas fa-grip-lines"></i>
-        </div>
-      `;
-
-      listItems.push(listItem);
-
-      draggable_list.appendChild(listItem);
-    });
-
-  addEventListeners();
+  writeMessage(msg);
+  checkNumber(msg);
 }
 
-function dragStart() {
-  // console.log('Event: ', 'dragstart');
-  dragStartIndex = +this.closest('li').getAttribute('data-index');
+// Write what user speaks
+function writeMessage(msg) {
+  msgEl.innerHTML = `
+    <div>You said: </div>
+    <span class="box">${msg}</span>
+  `;
 }
 
-function dragEnter() {
-  // console.log('Event: ', 'dragenter');
-  this.classList.add('over');
+// Check msg against number
+function checkNumber(msg) {
+  const num = +msg;
+
+  // Check if valid number
+  if (Number.isNaN(num)) {
+    msgEl.innerHTML += '<div>That is not a valid number</div>';
+    return;
+  }
+
+  // Check in range
+  if (num > 100 || num < 1) {
+    msgEl.innerHTML += '<div>Number must be between 1 and 100</div>';
+    return;
+  }
+
+  // Check number
+  if (num === randomNum) {
+    document.body.innerHTML = `
+      <h2>Congrats! You have guessed the number! <br><br>
+      It was ${num}</h2>
+      <button class="play-again" id="play-again">Play Again</button>
+    `;
+  } else if (num > randomNum) {
+    msgEl.innerHTML += '<div>GO LOWER</div>';
+  } else {
+    msgEl.innerHTML += '<div>GO HIGHER</div>';
+  }
 }
 
-function dragLeave() {
-  // console.log('Event: ', 'dragleave');
-  this.classList.remove('over');
+// Generate random number
+function getRandomNumber() {
+  return Math.floor(Math.random() * 100) + 1;
 }
 
-function dragOver(e) {
-  // console.log('Event: ', 'dragover');
-  e.preventDefault();
-}
+// Speak result
+recognition.addEventListener('result', onSpeak);
 
-function dragDrop() {
-  // console.log('Event: ', 'drop');
-  const dragEndIndex = +this.getAttribute('data-index');
-  swapItems(dragStartIndex, dragEndIndex);
+// End SR service
+recognition.addEventListener('end', () => recognition.start());
 
-  this.classList.remove('over');
-}
-
-// Swap list items that are drag and drop
-function swapItems(fromIndex, toIndex) {
-  const itemOne = listItems[fromIndex].querySelector('.draggable');
-  const itemTwo = listItems[toIndex].querySelector('.draggable');
-
-  listItems[fromIndex].appendChild(itemTwo);
-  listItems[toIndex].appendChild(itemOne);
-}
-
-// Check the order of list items
-function checkOrder() {
-  listItems.forEach((listItem, index) => {
-    const personName = listItem.querySelector('.draggable').innerText.trim();
-
-    if (personName !== richestPeople[index]) {
-      listItem.classList.add('wrong');
-    } else {
-      listItem.classList.remove('wrong');
-      listItem.classList.add('right');
-    }
-  });
-}
-
-function addEventListeners() {
-  const draggables = document.querySelectorAll('.draggable');
-  const dragListItems = document.querySelectorAll('.draggable-list li');
-
-  draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', dragStart);
-  });
-
-  dragListItems.forEach(item => {
-    item.addEventListener('dragover', dragOver);
-    item.addEventListener('drop', dragDrop);
-    item.addEventListener('dragenter', dragEnter);
-    item.addEventListener('dragleave', dragLeave);
-  });
-}
-
-check.addEventListener('click', checkOrder);
+document.body.addEventListener('click', e => {
+  if (e.target.id == 'play-again') {
+    window.location.reload();
+  }
+});
