@@ -1,11 +1,11 @@
-## New Year Countdown
+## Sortable List
 
-Landing page that counts down from the current date to the next new year
+Display a scrambled list that can be sorted with drag and drop. Used HTML Drag and Drop API
 
 ## Project Specifications
 
-- Create landing page with HTML/CSS
-- Calculate the days, hours, mins and seconds to the new year
-- Insert values into the DOM
-- Show a spinner right before loading the countdown
-- Show the coming year in the background
+- Create an ordered list (Top 10 richest people)
+- Scramble list items randomly
+- Allow user to drag and drop an item to a different position
+- Button to check if items are in correct order
+- Show green for correct order and red for wrong order

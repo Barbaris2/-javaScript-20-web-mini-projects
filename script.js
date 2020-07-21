@@ -1,40 +1,118 @@
-const days = document.getElementById('days');
-const hours = document.getElementById('hours');
-const minutes = document.getElementById('minutes');
-const seconds = document.getElementById('seconds');
-const countdown = document.getElementById('countdown');
-const year = document.getElementById('year');
-const loading = document.getElementById('loading');
+const draggable_list = document.getElementById('draggable-list');
+const check = document.getElementById('check');
 
-const currentYear = new Date().getFullYear();
+const richestPeople = [
+  'Jeff Bezos',
+  'Bill Gates',
+  'Warren Buffett',
+  'Bernard Arnault',
+  'Carlos Slim Helu',
+  'Amancio Ortega',
+  'Larry Ellison',
+  'Mark Zuckerberg',
+  'Michael Bloomberg',
+  'Larry Page'
+];
 
-const newYearTime = new Date(`January 01 ${currentYear + 1} 00:00:00`);
+// Store listitems
+const listItems = [];
 
-// Set background year
-year.innerText = currentYear + 1;
+let dragStartIndex;
 
-// Update countdown time
-function updateCountdown() {
-  const currentTime = new Date();
-  const diff = newYearTime - currentTime;
+createList();
 
-  const d = Math.floor(diff / 1000 / 60 / 60 / 24);
-  const h = Math.floor(diff / 1000 / 60 / 60) % 24;
-  const m = Math.floor(diff / 1000 / 60) % 60;
-  const s = Math.floor(diff / 1000) % 60;
+// Insert list items into DOM
+function createList() {
+  [...richestPeople]
+    .map(a => ({ value: a, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(a => a.value)
+    .forEach((person, index) => {
+      const listItem = document.createElement('li');
 
-  // Add values to DOM
-  days.innerHTML = d;
-  hours.innerHTML = h < 10 ? '0' + h : h;
-  minutes.innerHTML = m < 10 ? '0' + m : m;
-  seconds.innerHTML = s < 10 ? '0' + s : s;
+      listItem.setAttribute('data-index', index);
+
+      listItem.innerHTML = `
+        <span class="number">${index + 1}</span>
+        <div class="draggable" draggable="true">
+          <p class="person-name">${person}</p>
+          <i class="fas fa-grip-lines"></i>
+        </div>
+      `;
+
+      listItems.push(listItem);
+
+      draggable_list.appendChild(listItem);
+    });
+
+  addEventListeners();
 }
 
-// Show spinner before countdown
-setTimeout(() => {
-  loading.remove();
-  countdown.style.display = 'flex';
-}, 1000);
+function dragStart() {
+  // console.log('Event: ', 'dragstart');
+  dragStartIndex = +this.closest('li').getAttribute('data-index');
+}
 
-// Run every second
-setInterval(updateCountdown, 1000);
+function dragEnter() {
+  // console.log('Event: ', 'dragenter');
+  this.classList.add('over');
+}
+
+function dragLeave() {
+  // console.log('Event: ', 'dragleave');
+  this.classList.remove('over');
+}
+
+function dragOver(e) {
+  // console.log('Event: ', 'dragover');
+  e.preventDefault();
+}
+
+function dragDrop() {
+  // console.log('Event: ', 'drop');
+  const dragEndIndex = +this.getAttribute('data-index');
+  swapItems(dragStartIndex, dragEndIndex);
+
+  this.classList.remove('over');
+}
+
+// Swap list items that are drag and drop
+function swapItems(fromIndex, toIndex) {
+  const itemOne = listItems[fromIndex].querySelector('.draggable');
+  const itemTwo = listItems[toIndex].querySelector('.draggable');
+
+  listItems[fromIndex].appendChild(itemTwo);
+  listItems[toIndex].appendChild(itemOne);
+}
+
+// Check the order of list items
+function checkOrder() {
+  listItems.forEach((listItem, index) => {
+    const personName = listItem.querySelector('.draggable').innerText.trim();
+
+    if (personName !== richestPeople[index]) {
+      listItem.classList.add('wrong');
+    } else {
+      listItem.classList.remove('wrong');
+      listItem.classList.add('right');
+    }
+  });
+}
+
+function addEventListeners() {
+  const draggables = document.querySelectorAll('.draggable');
+  const dragListItems = document.querySelectorAll('.draggable-list li');
+
+  draggables.forEach(draggable => {
+    draggable.addEventListener('dragstart', dragStart);
+  });
+
+  dragListItems.forEach(item => {
+    item.addEventListener('dragover', dragOver);
+    item.addEventListener('drop', dragDrop);
+    item.addEventListener('dragenter', dragEnter);
+    item.addEventListener('dragleave', dragLeave);
+  });
+}
+
+check.addEventListener('click', checkOrder);
