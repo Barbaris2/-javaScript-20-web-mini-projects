@@ -12,7 +12,7 @@
 
 ## Описание веток
 
-- `git checkout master`- пустая ветка. Только общее описание проектов. _(файл READ.md)_.
+- `git checkout master`- пустая ветка. Только общее описание проектов. _(файл README.md)_.
 - `git checkout breakeout-game` - игра, где вы управляете платформой с помощью клавиш со стрелками. Ваша задача отбить шар платформой, так чтобы он разбил кирпичи. Это приложение использует _Canvas_. Смотреть на [CodeSandbox.io](https://9mjtu.csb.app/)
 - `git checkout custom-video-player` - пользовательский видеоплеер, использующий элемент видео HTML5 и его API-интерфейс JavaScript с индивидуальным дизайном. Смотреть на [CodeSandbox.io](https://td01s.csb.app/)
 - `git checkout dom-array-methods-DOM` - проект по обучению методам массива _forEach()_, _map()_, _filter()_, _sort()_, _reduce()_ и манипулированию DOM.Смотреть на [CodeSandbox.io](https://fr9po.csb.app/)
