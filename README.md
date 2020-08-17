@@ -37,7 +37,7 @@
 ### Ветки репозитория:
 
 - `git checkout master`
-- `git checkout breakeout-game` -
+- `git checkout breakeout-game`
 - `git checkout custom-video-player`
 - `git checkout dom-array-methods-DOM`
 - `git checkout exchange-rate-calculator`
